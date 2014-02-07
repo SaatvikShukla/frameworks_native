@@ -388,6 +388,10 @@ int initialize_directories() {
         if (fs_prepare_dir(android_media_dir.path, 0770, AID_MEDIA_RW, AID_MEDIA_RW) == -1) {
             goto fail;
         }
+        
+        if (selinux_android_restorecon(android_media_dir.path, 0)) {
+        goto fail;
+        }
 
         // /data/media/0
         char owner_media_dir[PATH_MAX];
